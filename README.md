@@ -1,6 +1,6 @@
 # Overview 
 
-#### This project builds a GraphQL API connected to your MySQL database using StepZen. We will use the @dbquery directive to generate our GraphQL schema. 
+## This project builds a GraphQL API connected to your MySQL database using StepZen. We will use the @dbquery directive to generate our GraphQL schema. 
 
 # Project Setup Commands To Run First
 
@@ -8,7 +8,7 @@
 
 `cd stepzen-mysql`
 
-### First things first, you'll need to deploy a database on Heroku. 
+## First things first, you'll need to deploy a database on Heroku. 
 
 Download MySQL workbench [before you start](https://dev.mysql.com/downloads/). You should also have MySQL installed on your machine in order to use the workbench.
 
@@ -20,7 +20,7 @@ Click on the 'Resources' tab and search for 'ClearDB MySQL' under 'Add-ons'. Cli
 
 Now click 'Settings' and 'Reveal Config Vars'. For the value of `CLEARDB_DATABASE_URL` you should see a string formatted like `mysql://USERNAME:PASSWORD@HOSTNAME/DB_NAME`. You'll use this info for setting up a new connection in your MySQL Workbench in the next few steps.
 
-### Seeding your database from MySQL Workbench
+## Seeding your database from MySQL Workbench
 
 Open up MySQL workbench. 
 Click the home icon at the top left corner.
@@ -68,7 +68,7 @@ VALUES
 Make sure it is either 1) all selected or 2) not selected at all and click the little lightning bolt under the Query 1 tab. This will run the SQL code that seeds your database. 
 
 
-### Set yourself up with StepZen
+## Set yourself up with StepZen
 
 _Make sure you're in the folder you cd'd into at the start._ 
 
@@ -78,14 +78,14 @@ _Make sure you're in the folder you cd'd into at the start._
 
 ...and enter your admin key. 
 
-### Create .gitignore file
+## Create .gitignore file
 ```
 touch .gitignore
 ```
 
 You'll use this to protect sensitive information later. 
 
-### Let's get started on connecting MySQL
+## Let's get started on connecting MySQL
 
 In the same folder as this project, run:
 
@@ -105,7 +105,7 @@ What does this code do? It provides StepZen the information it needs to connect 
 
 Now you just need to upload and deploy to StepZen.
 
-### Deploying to StepZen
+## Deploying to StepZen
 
 `stepzen upload configurationset libraryapi/config --file=./config.yaml`
 ^This uploads your config. 
@@ -116,7 +116,7 @@ stepzen deploy libraryapi/api --schema=libraryapi/library --configurationsets=li
 ```
 ^this uploads your schema and deploys to StepZen
 
-### The StepZen GraphiQL Query Editor
+## The StepZen GraphiQL Query Editor
 
 Now you can run `stepzen start libraryapi/api` in your terminal. This will open up a GraphiQL query editor connected to your database! 
 
@@ -140,7 +140,7 @@ And you should get a result like:
 So how does the magic happen? 
 
 
-### GraphQL Files 
+## GraphQL Files 
 
 
 Let's get under the hood, starting with book.graphql, which is written in GraphQL Schema Definiton Language.
@@ -187,7 +187,7 @@ Next, to connect the backend, we implement the interface as a concrete type with
 
 Lastly, we implement our query. 
 
-### What's in the query?
+## What's in the query?
 
 The `@supplies` directive tells StepZen what query we're concerned with fulfilling.
 
@@ -198,7 +198,7 @@ In the first `@dbquery` directive, the table fields are the same as the fields i
 In the second directive, you'll notice the line ` query: "SELECT * FROM books WHERE ? >= DATE '1900-00-00'",` which is a custom query that returns only books written in the 1900's and beyond. This is how you can make custom queries to your database. 
 
 
-### Author Interface and Types
+## Author Interface and Types
 In author.graphql, we have a similar pattern, without a materializer. 
 
 ```
@@ -226,7 +226,7 @@ type Query {
 
 But how do we tell StepZen that we want to tie these types together into one query? 
 
-### Creating the Schema
+## Creating the Schema
 
 That's where `index.graphql` comes in:
 

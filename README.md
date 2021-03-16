@@ -159,7 +159,7 @@ Paste this code into your the query editor:
 
 And you should get a result like: 
 
-<img width="600" alt="Screen Shot 2021-03-16 at 1 39 09 PM" src="https://user-images.githubusercontent.com/54046179/111376712-0e019f80-865d-11eb-89d0-4b3ba8778651.png">
+<img width="600" alt="Screen Shot 2021-03-16 at 1 39 09 PM" src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/puq3k1sgjczsq4i0tv8o.png">
 
 So how does the magic happen? 
 

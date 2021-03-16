@@ -129,7 +129,7 @@ stepzen upload configurationset libraryapi/config --file=./config.yaml
 
 Upload your schema and deploy to StepZen.
 
-```
+```bash
 stepzen upload schema libraryapi/schema --dir=. &&
 stepzen deploy libraryapi/api --schema=libraryapi/schema --configurationsets=libraryapi/config
 ```
@@ -146,7 +146,7 @@ This will open up a GraphiQL query editor connected to your database!
 
 Paste this code into your the query editor:
 
-```
+```graphql
 {
   book(id: 1) {  
 	id
@@ -172,7 +172,7 @@ So how does the magic happen?
 Let's get under the hood, starting with book.graphql, which is written in GraphQL Schema Definiton Language.
 
 
-```
+```graphql
 interface Book {
   id: ID!
   name: String!
@@ -227,7 +227,7 @@ In the second directive, you'll notice the line ` query: "SELECT * FROM books WH
 ## Author Interface and Types
 In author.graphql, we have a similar pattern, without a materializer. 
 
-```
+```graphql
 interface Author {
   id: ID!
   name: String!
@@ -256,7 +256,7 @@ But how do we tell StepZen that we want to tie these types together into one que
 
 That's where `index.graphql` comes in:
 
-```
+```graphql
 schema @sdl(files: ["author.graphql", "book.graphql"]) {
   query: Query
 }

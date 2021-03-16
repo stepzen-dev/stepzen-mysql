@@ -21,18 +21,18 @@ Click on the 'Resources' tab and search for 'ClearDB MySQL' under 'Add-ons'. Cli
 
 Now click 'Settings' and 'Reveal Config Vars'. For the value of `CLEARDB_DATABASE_URL` you should see a string formatted like `mysql://USERNAME:PASSWORD@HOSTNAME/DB_NAME`. You'll use this info for setting up a new connection in your MySQL Workbench in the next few steps.
 
-NOTE: in the `DB_NAME`, leave off the `?` and everything after it.
+>NOTE: in the `DB_NAME`, leave off the `?` and everything after it.
 
 ## Seeding your database from MySQL Workbench
 
 Open up MySQL workbench. 
-Click the home icon at the top left corner.
-Next to 'MySQL Connections' click the + button,
-then name your connection (whatever you want) and enter the USERNAME and HOSTNAME from your heroku account. You can leave the port as it is.  
-Click 'Store in Keychain'and add your PASSWORD.
-Click 'Test Connection'.  You won't need a default schema. 
-Once you hit 'OK' on the notification that your connection was successful, hit 'OK' again. 
-Click on your connection to open it. 
+* Click the home icon at the top left corner.
+* Next to 'MySQL Connections' click the + button, then name your connection whatever you want
+* Enter the `USERNAME` and `HOSTNAME` from your heroku account. You can leave the port as it is.  
+* Click 'Store in Keychain'and add your `PASSWORD`.
+* Click 'Test Connection'.  You won't need a default schema. 
+* Once you hit 'OK' on the notification that your connection was successful, hit 'OK' again. 
+* Click on your connection to open it. 
 
 Click the 'schemas' tab on the top left. Double click the name of your schema on the left to make sure it is selected, and copy and paste this code:
 
@@ -148,13 +148,12 @@ Paste this code into your the query editor:
 
 ```graphql
 {
-  book(id: 1) {  
-	id
-    
-  author {
-        id
-      }
-	      }
+  book(id: 1) {
+    id
+    author {
+      id
+    }
+  }
 }
 ```
 
@@ -162,15 +161,11 @@ And you should get a result like:
 
 <img width="600" alt="Screen Shot 2021-03-16 at 1 39 09 PM" src="https://user-images.githubusercontent.com/54046179/111376712-0e019f80-865d-11eb-89d0-4b3ba8778651.png">
 
-
 So how does the magic happen? 
-
 
 ## GraphQL Files 
 
-
-Let's get under the hood, starting with book.graphql, which is written in GraphQL Schema Definiton Language.
-
+Let's get under the hood, starting with `book.graphql`, which is written in GraphQL Schema Definiton Language.
 
 ```graphql
 interface Book {
@@ -207,7 +202,7 @@ type Query {
 
 The first eleven lines of code define the interface, which allows us to implement our Book type multiple times. 
 
-Notice the `@materializer` directive. When we query `book`, we want to be able to see information on the book's author as well, and we're able to do this by using the materializer to query author and return the name. It will use the authorID field to find each author. 
+Notice the `@materializer` directive. When we query `book`, we want to be able to see information on the book's `author` as well, and we're able to do this by using the materializer to query `author` and return the `name`. It will use the `authorID` field to find each `author`. 
 
 Next, to connect the backend, we implement the interface as a concrete type with `type BookBackend implements Book...`. 
 
@@ -225,7 +220,7 @@ In the second directive, you'll notice the line ` query: "SELECT * FROM books WH
 
 
 ## Author Interface and Types
-In author.graphql, we have a similar pattern, without a materializer. 
+In `author.graphql`, we have a similar pattern, without a materializer. 
 
 ```graphql
 interface Author {

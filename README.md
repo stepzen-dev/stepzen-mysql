@@ -68,8 +68,15 @@ VALUES
 (4,'The Murders in the Rue Morge','1841-04-04', 3);
 ```
 
-Make sure it is either 1) all selected or 2) not selected at all and click the little lightning bolt under the Query 1 tab. This will run the SQL code that seeds your database. 
+Make sure it is either 1) all selected or 2) not selected at all and click the little lightning bolt under the Query 1 tab. This will run the SQL code that seeds your database.
 
+Query the database to verify the seed data was entered:
+
+```sql
+SELECT * FROM authors
+```
+
+<img width="600" alt="sql-query-response" src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3ytpjr9pqtppntjcvv8x.png">
 
 ## Set yourself up with StepZen
 
@@ -159,7 +166,7 @@ Paste this code into your the query editor:
 
 And you should get a result like: 
 
-<img width="600" alt="Screen Shot 2021-03-16 at 1 39 09 PM" src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/puq3k1sgjczsq4i0tv8o.png">
+<img width="600" alt="GraphQL-query-response" src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/puq3k1sgjczsq4i0tv8o.png">
 
 So how does the magic happen? 
 

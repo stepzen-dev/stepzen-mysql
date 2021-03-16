@@ -4,9 +4,10 @@
 
 # Project Setup Commands To Run First
 
-`git clone https://github.com/stepzen-samples/stepzen-mysql.git`
-
-`cd stepzen-mysql`
+```bash
+git clone https://github.com/stepzen-samples/stepzen-mysql.git
+cd stepzen-mysql
+```
 
 ## First things first, you'll need to deploy a database on Heroku. 
 
@@ -35,7 +36,7 @@ Click on your connection to open it.
 
 Click the 'schemas' tab on the top left. Double click the name of your schema on the left to make sure it is selected, and copy and paste this code:
 
-```
+```sql
 CREATE TABLE `authors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
@@ -74,13 +75,22 @@ Make sure it is either 1) all selected or 2) not selected at all and click the l
 
 _Make sure you're in the folder you cd'd into at the start._ 
 
-`npm install -g stepzen` 
+### Install StepZen CLI
 
-`stepzen login -a [account name]`
+```bash
+npm install -g stepzen
+``` 
+
+### Login to StepZen account
+
+```bash
+stepzen login -a [account name]
+```
 
 ...and enter your admin key. 
 
-## Create .gitignore file
+### Create .gitignore file
+
 ```
 touch .gitignore
 ```
@@ -91,13 +101,15 @@ You'll use this to protect sensitive information later.
 
 In the same folder as this project, run:
 
-`touch config.yaml`
+```bash
+touch config.yaml
+```
 
 Then add `config.yaml` to your .gitignore as well. It's private info! :key:
 
 This is what you'll place in it: 
 
-```
+```yaml
 configurationset:
   - configuration:
       name: MySQL_config
@@ -109,18 +121,28 @@ Now you just need to upload and deploy to StepZen.
 
 ## Deploying to StepZen
 
-`stepzen upload configurationset libraryapi/config --file=./config.yaml`
-^This uploads your config. 
+Upload your config.
+
+```bash
+stepzen upload configurationset libraryapi/config --file=./config.yaml
+```
+
+Upload your schema and deploy to StepZen.
 
 ```
 stepzen upload schema libraryapi/schema --dir=. &&
 stepzen deploy libraryapi/api --schema=libraryapi/schema --configurationsets=libraryapi/config
 ```
-^this uploads your schema and deploys to StepZen
 
 ## The StepZen GraphiQL Query Editor
 
-Now you can run `stepzen start libraryapi/api` in your terminal. This will open up a GraphiQL query editor connected to your database! 
+In your terminal you can now you run:
+
+```bash
+stepzen start libraryapi/api
+```
+
+This will open up a GraphiQL query editor connected to your database! 
 
 Paste this code into your the query editor:
 

@@ -148,18 +148,20 @@ Paste this code into your the query editor:
 
 ```
 {
-  booksFromBackend(originalPublishingDate:"1934-01-01")
-  
-     {  
+  book(id: 1) {  
 	id
-	     }
-
+    
+  author {
+        id
+      }
+	      }
 }
 ```
 
 And you should get a result like: 
 
-<img width="600" alt="Screen Shot 2021-03-16 at 12 03 04 PM" src="https://user-images.githubusercontent.com/54046179/111371521-c710ab80-8656-11eb-8a58-40f1e7e83d85.png">
+<img width="600" alt="Screen Shot 2021-03-16 at 1 39 09 PM" src="https://user-images.githubusercontent.com/54046179/111376712-0e019f80-865d-11eb-89d0-4b3ba8778651.png">
+
 
 So how does the magic happen? 
 

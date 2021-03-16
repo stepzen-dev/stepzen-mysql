@@ -20,6 +20,8 @@ Click on the 'Resources' tab and search for 'ClearDB MySQL' under 'Add-ons'. Cli
 
 Now click 'Settings' and 'Reveal Config Vars'. For the value of `CLEARDB_DATABASE_URL` you should see a string formatted like `mysql://USERNAME:PASSWORD@HOSTNAME/DB_NAME`. You'll use this info for setting up a new connection in your MySQL Workbench in the next few steps.
 
+NOTE: in the `DB_NAME`, leave off the `?` and everything after it.
+
 ## Seeding your database from MySQL Workbench
 
 Open up MySQL workbench. 
@@ -99,7 +101,7 @@ This is what you'll place in it:
 configurationset:
   - configuration:
       name: MySQL_config
-      dsn: USERNAME:PASSWORD@HOSTNAME/DB_NAME
+      dsn: USERNAME:PASSWORD@tcp(HOSTNAME)/DB_NAME
 ```
 What does this code do? It provides StepZen the information it needs to connect to your database.
 
@@ -112,7 +114,7 @@ Now you just need to upload and deploy to StepZen.
 
 ```
 stepzen upload schema libraryapi/schema --dir=. &&
-stepzen deploy libraryapi/api --schema=libraryapi/library --configurationsets=libraryapi/config
+stepzen deploy libraryapi/api --schema=libraryapi/schema --configurationsets=libraryapi/config
 ```
 ^this uploads your schema and deploys to StepZen
 

@@ -1,17 +1,12 @@
-interface Author {
+type Author {
   id: ID!
   name: String!
   isPseudonym: Boolean!
 }
-type AuthorBackend implements Author {}
 type Query {
   author(id: ID!): Author
-  authors(isPseudonym: Boolean!): [Author]
-  authorFromBackend(id: ID!): AuthorBackend
-        @supplies(query: "author")
         @dbquery(type: "mysql", table: "authors", configuration: "MySQL_config")
-  authorsFromBackend(isPseudonym: Boolean!): [AuthorBackend]
-        @supplies(query: "authors")
+  authors(isPseudonym: Boolean!): [Author]
         @dbquery(
             type: "mysql",
             query: "SELECT * FROM authors WHERE isPseudonym = ?",

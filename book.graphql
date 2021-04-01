@@ -1,4 +1,4 @@
-interface Book {
+type Book {
   id: ID!
   name: String!
   originalPublishingDate: Date!
@@ -9,19 +9,10 @@ interface Book {
         arguments: [{ name: "id" field: "authorID"}]
   )
 }
-type BookBackend implements Book {
-            id: ID!
-            name: String!
-            originalPublishingDate: Date!
-}
 type Query {
   book(id: ID!): Book
-  books(originalPublishingDate: Date!): [Book]
-  bookFromBackend(id: ID!): BookBackend
-        @supplies(query: "book")
         @dbquery(type: "mysql", table: "books", configuration: "MySQL_config")
-  booksFromBackend(originalPublishingDate: Date!): [BookBackend]
-        @supplies(query: "books")
+  books(originalPublishingDate: Date!): [Book]
         @dbquery(
             type: "mysql",
             query: "SELECT * FROM books WHERE ? >= DATE '1900-00-00'",

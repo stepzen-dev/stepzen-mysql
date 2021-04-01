@@ -57,7 +57,7 @@ CREATE TABLE `books` (
 INSERT INTO `authors` 
 VALUES 
 (1,'Agatha Christie',0),
-(2,'Sherlock Holmes',0),
+(2,'Sir Arthur Conan Doyle',0),
 (3,'Edgar Allan Poe',0);
 
 INSERT INTO `books` 
@@ -146,10 +146,10 @@ stepzen deploy libraryapi/api --schema=libraryapi/schema --configurationsets=lib
 In your terminal you can now you run:
 
 ```bash
-stepzen start
+stepzen init
 ```
 
-Name your endpoint, and this will open up a GraphiQL query editor connected to your database! 
+Name your endpoint, and then `stepzen start` will open up a GraphiQL query editor connected to your database! 
 
 Paste this code into your the query editor:
 
@@ -175,7 +175,7 @@ So how does the magic happen?
 Let's get under the hood, starting with `book.graphql`, which is written in GraphQL Schema Definiton Language.
 
 ```graphql
-interface Book {
+type Book {
   id: ID!
   name: String!
   originalPublishingDate: Date!
@@ -186,38 +186,25 @@ interface Book {
         arguments: [{ name: "id" field: "authorID"}]
   )
 }
-type BookBackend implements Book {
-            id: ID!
-            name: String!
-            originalPublishingDate: Date!
-}
 type Query {
   book(id: ID!): Book
-  books(originalPublishingDate: Date!): [Book]
-  bookFromBackend(id: ID!): BookBackend
-        @supplies(query: "book")
         @dbquery(type: "mysql", table: "books", configuration: "MySQL_config")
-  booksFromBackend(originalPublishingDate: Date!): [BookBackend]
-        @supplies(query: "books")
+  books(originalPublishingDate: Date!): [Book]
         @dbquery(
             type: "mysql",
             query: "SELECT * FROM books WHERE ? >= DATE '1900-00-00'",
             configuration: "MySQL_config"
         )
 }
+
+
 ```
 
-The first eleven lines of code define the interface, which allows us to implement our Book type multiple times. 
-
-Notice the `@materializer` directive. When we query `book`, we want to be able to see information on the book's `author` as well, and we're able to do this by using the materializer to query `author` and return the `name`. It will use the `authorID` field to find each `author`. 
-
-Next, to connect the backend, we implement the interface as a concrete type with `type BookBackend implements Book...`. 
+Notice the `@materializer` directive on the type. When we query `book`, we want to be able to see information on the book's `author` as well, and we're able to do this by using the materializer to query `author` and return the `name`. It will use the `authorID` field to find each `author`. 
 
 Lastly, we implement our query. 
 
 ## What's in the query?
-
-The `@supplies` directive tells StepZen what query we're concerned with fulfilling.
 
 The `@dbquery` directive holds a lot here. It tells StepZen that we're using a database query and that we're using MySQL.
 
@@ -226,24 +213,19 @@ In the first `@dbquery` directive, the table fields are the same as the fields i
 In the second directive, you'll notice the line ` query: "SELECT * FROM books WHERE ? >= DATE '1900-00-00'",` which is a custom query that returns only books written in the 1900's and beyond. This is how you can make custom queries to your database. 
 
 
-## Author Interface and Types
+## Author Types
 In `author.graphql`, we have a similar pattern, without a materializer. 
 
 ```graphql
-interface Author {
+type Author {
   id: ID!
   name: String!
   isPseudonym: Boolean!
 }
-type AuthorBackend implements Author {}
 type Query {
   author(id: ID!): Author
-  authors(isPseudonym: Boolean!): [Author]
-  authorFromBackend(id: ID!): AuthorBackend
-        @supplies(query: "author")
         @dbquery(type: "mysql", table: "authors", configuration: "MySQL_config")
-  authorsFromBackend(isPseudonym: Boolean!): [AuthorBackend]
-        @supplies(query: "authors")
+  authors(isPseudonym: Boolean!): [Author]
         @dbquery(
             type: "mysql",
             query: "SELECT * FROM authors WHERE isPseudonym = ?",

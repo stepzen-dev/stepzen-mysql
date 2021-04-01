@@ -146,10 +146,10 @@ stepzen deploy libraryapi/api --schema=libraryapi/schema --configurationsets=lib
 In your terminal you can now you run:
 
 ```bash
-stepzen start libraryapi/api
+stepzen start
 ```
 
-This will open up a GraphiQL query editor connected to your database! 
+Name your endpoint, and this will open up a GraphiQL query editor connected to your database! 
 
 Paste this code into your the query editor:
 
